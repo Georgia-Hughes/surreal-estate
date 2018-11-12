@@ -1,0 +1,39 @@
+aside {
+    background: white;
+    padding: 1em 0 1em 3em;
+    @media(max-width: 768px){
+        padding: 1em 0;
+    }
+}
+
+.filterTitle {
+    padding: 1em 0.5em 0.8em;
+}
+
+a.link-black{
+    color: black;
+    font-size: .9em;
+    padding: 0.3em 0.5em;
+    text-decoration: none;
+    border: 1px solid #808080;
+    border-radius: 1em;
+    margin: 0 0.6em;
+    &:hover{
+        color: #fff;
+        background: #747bf5;
+    }
+}
+
+form{
+    &.search{
+        flex-flow: row;
+        padding: 0;
+        margin: 0;
+        justify-content: flex-start;
+    }
+}
+
+.searchButton{
+    padding: 0.5em 1.7em;
+    margin-left: 0;
+}

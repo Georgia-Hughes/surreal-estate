@@ -22,6 +22,8 @@
   "homepage": "https://github.com/MCRcodes/react-bootstrap#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "jwt-decode": "^2.2.0",
+    "moment": "^2.22.2",
     "prop-types": "^15.6.1",
     "qs": "^6.5.2",
     "query-string": "^6.2.0",
@@ -44,7 +46,7 @@
     "eslint": "<=4.19.1",
     "eslint-config-mcr-codes": "^1.3.0",
     "file-loader": "^1.1.11",
-    "jest": "^22.4.3",
+    "jest": "^22.4.4",
     "node-sass": "^4.9.2",
     "react-test-renderer": "^16.3.2",
     "sass-loader": "^7.0.1",

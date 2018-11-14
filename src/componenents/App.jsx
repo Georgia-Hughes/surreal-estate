@@ -1,42 +1,68 @@
-/* eslint-disable func-names */
 import React from 'react';
 import '../styles/app.scss';
 import NavBar from '../componenents/NavBar';
 import Properties from '../componenents/Properties';
 import { Switch, Route } from 'react-router-dom';
 import AddProperty from './AddProperty';
-
+import AuthRoute from './AuthRoute';
+import SignUp from './SignUp';
+import Login from './Login';
+import TokenManager from '../utils/token-manager';
 
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      userID: null,
+      user: TokenManager.isTokenValid() ? TokenManager.getTokenPayload() : null,
     };
+
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.isLoggedIn = this.isLoggedIn.bind(this);
   }
 
-  handleLogin(response) {
-    this.setState({
-      userID: response.userID,
-    });
+  handleLogin() {
+    this.setState({ user: TokenManager.getTokenPayload() });
   }
 
   handleLogout() {
-    window.FB.logout();
+    TokenManager.removeToken();
+    this.setState({ user: null });
+  }
+
+  isLoggedIn() {
+    return Boolean(this.state.user) && TokenManager.isTokenValid();
   }
 
   render() {
     return (
       <div>
         <NavBar
-          onLogin={this.handleLogin}
+          isLoggedIn={this.isLoggedIn()}
+          user={this.state.user}
           onLogout={this.handleLogout}
-          userID={this.state.userID}
         />
         <Switch>
-          <Route exact path="/" component={Properties} />
-          <Route exact path="/add-property" component={AddProperty} />
+          <Route
+            exact
+            path="/"
+            component={Properties}
+          />
+          <AuthRoute
+            exact
+            path="/add-property"
+            component={AddProperty}
+            authenticate={this.isLoggedIn}
+          />
+          <Route
+            exact
+            path="/login"
+            render={props => (
+              <Login {...props} onLogin={this.handleLogin} />
+            )}
+          />
+          <Route exact path="/sign-up" component={SignUp} />
         </Switch>
       </div>
     );

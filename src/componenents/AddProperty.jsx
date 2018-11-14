@@ -21,8 +21,13 @@ class AddProperty extends React.Component {
         isError: false,
       },
       ],
+      error: '',
     };
   }
+
+  resetForm = () => {
+    this.setState(() => this.initialState);
+  };
 
   handleAddProperty = (event) => {
     event.preventDefault();
@@ -33,17 +38,27 @@ class AddProperty extends React.Component {
       isError: false,
     });
 
-    axios.post('http://localhost:3000/api/v1/PropertyListing/', this.state.fields)
-      .then(() => this.setState({
-        isSuccess: true,
-        alertMessage: 'Property added.',
-      }))
-      .catch(() => {
-        this.setState({
-          alertMessage: 'Property not added. Please try again later.',
-          isError: true,
-        });
+    if (this.validate()) {
+      this.setState({
+        error: '',
       });
+
+      axios.post('http://localhost:3000/api/v1/PropertyListing/', this.state.fields)
+        .then(() => this.setState({
+          isSuccess: true,
+          alertMessage: 'Property added.',
+        }))
+        .catch(() => {
+          this.setState({
+            alertMessage: 'Property not added. Please try again later.',
+            isError: true,
+          });
+        });
+    } else {
+      this.setState({
+        error: 'The form is invalid',
+      });
+    }
   };
 
     handleFieldChange = event => {
@@ -55,20 +70,25 @@ class AddProperty extends React.Component {
       });
     };
 
+    validate() {
+      return this.state.fields.title.length > 4;
+    }
+
     render() {
       return (
         <div className="addProperty">
+          <div className="alert alert.success">
+            {
+              this.state.isSuccess &&
+                <Alert message={this.state.alertMessage} success />
+            }
+            {
+              this.state.isError &&
+                <Alert message={this.state.alertMessage} />
+            }
+          </div>
+          <h1 style={{ color: 'red' }}>{this.state.error}</h1>
           <form onSubmit={this.handleAddProperty}>
-            <div className="alert alert.success">
-              {
-                this.state.isSuccess &&
-                  <Alert message={this.state.alertMessage} success />
-              }
-              {
-                this.state.isError &&
-                  <Alert message={this.state.alertMessage} />
-              }
-            </div>
             <div className="row">
               <label>Title:</label>
               <input
@@ -84,9 +104,14 @@ class AddProperty extends React.Component {
                 value={this.state.fields.type}
                 onChange={this.handleFieldChange}
               >
-                <option>Select a Type</option> 
-                <option value="House">House</option>
+                <option>Select a Type</option>
                 <option value="Flat">Flat</option>
+                <option value="Detached">Detached</option>
+                <option value="Semi-Detached">Semi-Detached</option>
+                <option value="Terraced">Terraced</option>
+                <option value="End of Terrace">End of Terrace</option>
+                <option value="Cottage">Cottage</option>
+                <option value="Bungalow">Bungalow</option>
               </select>
             </div>
             <div className="row">
@@ -98,7 +123,9 @@ class AddProperty extends React.Component {
               >
                 <option>Select a City</option>
                 <option value="Manchester">Manchester</option>
-                <option value="Salford">Salford</option>
+                <option value="Leeds">Leeds</option>
+                <option value="Sheffield">Sheffield</option>
+                <option value="Liverpool">Liverpool</option>
               </select>
             </div>
             <div className="row">
@@ -111,6 +138,8 @@ class AddProperty extends React.Component {
                 <option>No. of Bedroms</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
               </select>
             </div>
             <div className="row">

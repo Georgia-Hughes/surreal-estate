@@ -5,7 +5,7 @@ import '../styles/properties.scss';
 import { Link } from 'react-router-dom';
 import qs from 'qs';
 
-class AddProperty extends React.Component {
+class Properties extends React.Component {
   constructor(props) {
     super(props);
 
@@ -58,21 +58,29 @@ class AddProperty extends React.Component {
     return (
       <div>
         <aside>
-          <form className="search" onSubmit={this.handleSearch}>
-            <input
-              type="text"
-              className="searchBox"
-              value={this.state.search}
-              onChange={event => this.setState({ search: event.target.value })}
-            />
-            <button className="searchButton" type="submit"><i className="fas fa-search" /></button>
-          </form>
-          <div className="filterTitle">Filter by city:</div>
-          <Link to={this.buildQueryString('query', { city: 'Manchester' })} className="link-black">Manchester</Link>
-          <Link to={this.buildQueryString('query', { city: 'Salford' })} className="link-black">Salford</Link>
-          <div className="filterTitle">Sort by:</div>
-          <Link to={this.buildQueryString('sort', { price: 1 })} className="link-black">Price Ascending</Link>
-          <Link to={this.buildQueryString('sort', { price: -1 })} className="link-black">Price Descending</Link>
+          <div className="search-container">
+            <form className="search" onSubmit={this.handleSearch}>
+              <input
+                type="text"
+                className="searchBox"
+                value={this.state.search}
+                onChange={event => this.setState({ search: event.target.value })}
+              />
+              <button className="searchButton" type="submit"><i className="fas fa-search" /></button>
+            </form>
+          </div>
+          <div className="search-container">
+            <div className="filterTitle">Filter by city:</div>
+            <Link to={this.buildQueryString('query', { city: 'Manchester' })} className="link-black">Manchester</Link>
+            <Link to={this.buildQueryString('query', { city: 'Leeds' })} className="link-black">Leeds</Link>
+            <Link to={this.buildQueryString('query', { city: 'Sheffield' })} className="link-black">Sheffield</Link>
+            <Link to={this.buildQueryString('query', { city: 'Liverpool' })} className="link-black">Liverpool</Link>
+          </div>
+          <div className="search-container">
+            <div className="filterTitle">Sort by:</div>
+            <Link to={this.buildQueryString('sort', { price: 1 })} className="link-black">Price Ascending</Link>
+            <Link to={this.buildQueryString('sort', { price: -1 })} className="link-black">Price Descending</Link>
+          </div>
         </aside>
         <div className="PropertiesClass">
           {this.state.properties.map((property) => {
@@ -95,4 +103,4 @@ class AddProperty extends React.Component {
   }
 }
 
-export default AddProperty;
+export default Properties;

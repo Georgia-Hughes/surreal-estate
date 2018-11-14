@@ -7,7 +7,12 @@ aside {
 }
 
 .filterTitle {
-    padding: 1em 0.5em 0.8em;
+    padding: 1em 0em 0em 0.8em;
+    display: inline;
+    @media(max-width: 993px){
+        padding: 1em 0.8em 0.8em;
+        display: block;
+    }
 }
 
 a.link-black{
@@ -18,10 +23,17 @@ a.link-black{
     border: 1px solid #808080;
     border-radius: 1em;
     margin: 0 0.6em;
+    transition: background-color 0.3s ease;
+    background-color: transparent;
     &:hover{
         color: #fff;
-        background: #747bf5;
+        background-color: #747bf5;
     }
+}
+
+.search-container {
+    display: inline-block;
+    padding-right: 0.8em;
 }
 
 form{

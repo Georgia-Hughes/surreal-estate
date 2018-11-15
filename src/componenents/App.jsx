@@ -5,42 +5,46 @@ import Properties from '../componenents/Properties';
 import { Switch, Route } from 'react-router-dom';
 import AddProperty from './AddProperty';
 import AuthRoute from './AuthRoute';
-import SignUp from './SignUp';
-import Login from './Login';
-import TokenManager from '../utils/token-manager';
 
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      user: TokenManager.isTokenValid() ? TokenManager.getTokenPayload() : null,
+      userID: null,
+      picture: null,
+      name: null,
     };
-
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.isLoggedIn = this.isLoggedIn.bind(this);
   }
 
-  handleLogin() {
-    this.setState({ user: TokenManager.getTokenPayload() });
-  }
+  handleLogin = response => {
+    this.setState({
+      userID: response.userID,
+      picture: response.picture.data.url,
+      name: response.name,
+    });
+  };
 
-  handleLogout() {
-    TokenManager.removeToken();
-    this.setState({ user: null });
-  }
+  handleLogout = () => {
+    this.setState({
+      userID: null,
+      picture: null,
+      name: null,
+    });
+  };
 
-  isLoggedIn() {
-    return Boolean(this.state.user) && TokenManager.isTokenValid();
-  }
+  isLoggedIn = () => {
+    return Boolean(this.state.userID);
+  };
 
   render() {
     return (
       <div>
         <NavBar
-          isLoggedIn={this.isLoggedIn()}
-          user={this.state.user}
+          onLogin={this.handleLogin}
+          userID={this.state.userID}
+          picture={this.state.picture}
+          name={this.state.name}
           onLogout={this.handleLogout}
         />
         <Switch>
@@ -55,14 +59,6 @@ class App extends React.Component {
             component={AddProperty}
             authenticate={this.isLoggedIn}
           />
-          <Route
-            exact
-            path="/login"
-            render={props => (
-              <Login {...props} onLogin={this.handleLogin} />
-            )}
-          />
-          <Route exact path="/sign-up" component={SignUp} />
         </Switch>
       </div>
     );

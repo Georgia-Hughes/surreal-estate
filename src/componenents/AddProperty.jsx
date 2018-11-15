@@ -87,7 +87,9 @@ class AddProperty extends React.Component {
                 <Alert message={this.state.alertMessage} />
             }
           </div>
-          <h1 style={{ color: 'red' }}>{this.state.error}</h1>
+          {this.state.error &&
+            <h1 className="error-message">{this.state.error}</h1>
+          }
           <form onSubmit={this.handleAddProperty}>
             <div className="row">
               <label>Title:</label>

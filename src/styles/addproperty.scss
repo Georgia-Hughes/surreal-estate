@@ -62,7 +62,7 @@ select{
         border: #FF0000 1px solid;
         color: #FF0000;
         max-width: 400px;
-        margin: 3em 0em 0 2.3em;
+        margin: 3em 0em 0 14.6em;
         padding: 0.6em;
         font-size: 0.9em;
     }
@@ -71,7 +71,7 @@ select{
         border: #6EDF5C 1px solid;
         color: #6EDF5C;
         max-width: 400px;
-        margin: 3em 0em 0 2.3em;
+        margin: 3em 0em 0 14.6em;
         padding: 0.6em;
         font-size: 0.9em;
     }
@@ -79,4 +79,14 @@ select{
 
 .was-validated .form-control:valid~.invalid-feedback {
     display: none;
+}
+
+.error-message{
+    background: #FFEFEF;
+    border: #FF0000 1px solid;
+    color: #FF0000;
+    max-width: 400px;
+    margin: 3em 0em 0 14.6em;
+    padding: 0.6em;
+    font-size: 0.9em;
 }

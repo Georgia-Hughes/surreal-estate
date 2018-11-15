@@ -81,6 +81,10 @@ class Properties extends React.Component {
             <Link to={this.buildQueryString('sort', { price: 1 })} className="link-black">Price Ascending</Link>
             <Link to={this.buildQueryString('sort', { price: -1 })} className="link-black">Price Descending</Link>
           </div>
+          <div className="search-container">
+            <div className="filterTitle">Reset:</div>
+            <Link to="/" className="link-black"><i className="fas fa-times" /></Link>
+          </div>
         </aside>
         <div className="PropertiesClass">
           {this.state.properties.map((property) => {
